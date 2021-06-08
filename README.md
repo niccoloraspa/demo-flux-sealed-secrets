@@ -232,7 +232,7 @@ kubectl create secret generic -n hello hello-secret \
     -o yaml > hello-secret.yaml
 ```
 
-3. Sealed the secret using kubeseal:
+3. Seal the secret using `kubeseal`:
 
 ```bash
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
@@ -240,7 +240,7 @@ kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
     > hello-secret-sealed.yaml
 ```
 
-1. Remove the plain secret and commit the sealed one to deploy:
+4. Remove the plain secret and commit the sealed one to deploy it:
 
 ```bash
 rm hello-secret.yaml
@@ -248,7 +248,7 @@ git add hello-secret-sealed.yaml && git commit -m "Add sealed hello-secret"
 git push
 ```
 
-5. Wait for the secrets to be deployed:
+1. Wait for the `SealedSecret` to be deployed:
 
 ```bash
 kubectl get SealedSecret -n hello -w
@@ -257,6 +257,8 @@ kubectl get SealedSecret -n hello -w
 > You can force the reconciliation with `flux reconcile source git flux-system`
 
 ## 5. Test the hello-secret app
+
+The `hello-secret` app contains a containerized Go web server application that responds to all HTTP requests with the value of the `SECRET` environment variable.
 
 1. Restart the `hello-app` pod:
 
@@ -291,8 +293,6 @@ Secret: 1234
 ```
 
 ## 6. Clean up
-
-To clean up:
 
 1. Delete the `minikube` cluster:
 
