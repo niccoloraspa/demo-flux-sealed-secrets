@@ -39,7 +39,7 @@ make setup
 
 By default, the command spins up a one node Kubernetes cluster of version `v1.19.4` in a VirtualBox VM (CPUs=2, Memory=4096MB, Disk=20000MB).
 
-You can pass additional parameters to change the default values. Please referer to this [Makefile](minikube/Makefile) for additional details on the cluster creation.
+You can pass additional parameters to change the default values. Please referer to this [Makefile](minikube/Makefile) for further details on the cluster creation.
 
 ## 1. Install FluxV2
 
@@ -144,7 +144,7 @@ NAME                                   DESIRED   CURRENT   READY   AGE
 replicaset.apps/hello-app-6cb6ddd95f   1         1         0       54s
 ```
 
-As you can see, the pod `pod/hello-app-6cb6ddd95f-2chmq` is in the `CreateContainerConfigError` status. This happens because the pod needs a `hello-secret` secret, which is not currently deployed. Infact, inspecting the pod's events:
+As you can see, the pod `pod/hello-app-6cb6ddd95f-2chmq` is in the `CreateContainerConfigError` status. To become running, the pod needs a `hello-secret` secret, which is currently not deployed:
 
 ```bash
 ...
@@ -210,7 +210,7 @@ kubectl get pods -n flux-system | grep sealed-secrets
 
 ## 4. Create a sealed hello-secret
 
-At startup, the sealed-secrets controller generates a 4096-bit RSA key pair and persists the private and public keys as Kubernetes secrets in the flux-system namespace.
+At startup, the sealed-secrets controller generates a 4096-bit RSA key pair and persists the private and public keys as Kubernetes secrets in the `flux-system` namespace.
 
 1. Retrieve the public key with:
 
@@ -221,7 +221,7 @@ kubeseal --fetch-cert \
     > pub-sealed-secrets.pem
 ```
 
-The public key can be safely stored in Git, and can be used to encrypt secrets without direct access to the Kubernetes cluster.
+The public key can be safely stored in Git and can be used to encrypt secrets without direct access to the Kubernetes cluster.
 
 2. Create the secret manifest:
 
