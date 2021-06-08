@@ -49,7 +49,7 @@ flux bootstrap github \
     --owner $GITHUB_USER \
     --repository demo-flux-secrets-fleet \
     --branch main \
-    --path ./clusters/minikube-cluster \
+    --path ./minikube-cluster \
     --personal
 ```
 
@@ -59,7 +59,7 @@ The `bootstrap` command:
 - generates Flux components manifests
 - commits Flux components manifests to the `main` branch
 - installs the Flux components in the `flux-system` namespace
-- configures the target cluster to synchronize with the `./clusters/minikube-cluster` path inside the repository
+- configures the target cluster to synchronize with the `./minikube-cluster` path inside the repository
 
 2. While you wait for the commands to complete, you can verify that the pods in the `flux-system` are becoming running:
 
@@ -70,11 +70,8 @@ kubectl get pods -n flux-system -w
 3. Clone the `demo-flux-secrets-fleet` repository
 
 ```bash
-mkdir $REPO_DIR/demo
-cd $REPO_DIR/demo
-
 git clone https://github.com/$GITHUB_USER/demo-flux-secrets-fleet
-cd demo-flux-secrets-fleet
+cd demo-flux-secrets-fleet/
 ```
 
 ## 2. Deploy Hello secret App with Flux
@@ -82,7 +79,7 @@ cd demo-flux-secrets-fleet
 1. Create a `hello-secret` folder inside the `minikube-cluster` folder:
 
 ```bash
-mkdir -p ./clusters/minikube-cluster/hello-secret/
+mkdir hello-secret
 ```
 
 2. Create a Flux `GitRepository` manifest pointing to the [Hello Secret][hello-secret-repository] repository's master branch:
@@ -93,7 +90,7 @@ flux create source git hello-secret \
     --branch main \
     --interval 1m \
     --export \
-    > ./clusters/minikube-cluster/hello-secret/hello-secret-source.yaml
+    > ./hello-secret/hello-secret-source.yaml
 ```
 
 3. Create a Flux `Kustomization` manifest to build and apply the kustomize directory located in the Hello Secret repository under the `manifests` folder.
@@ -105,7 +102,7 @@ flux create kustomization hello-secret \
   --prune=true \
   --interval=1m \
   --export \
-  > ./clusters/minikube-cluster/hello-secret/hello-secret-kustomization.yaml
+  > ./hello-secret/hello-secret-kustomization.yaml
 ```
 
 4. Deploy via GitOps
@@ -161,7 +158,7 @@ Events:
 1. Create a `sealed-secrets` folder inside the `minikube-cluster` folder:
 
 ```bash
-mkdir -p ./clusters/minikube-cluster/sealed-secrets/
+mkdir sealed-secrets
 ```
 
 2. Create a `HelmRepository` manifest
@@ -171,7 +168,7 @@ flux create source helm sealed-secrets \
     --url https://bitnami-labs.github.io/sealed-secrets \
     --interval 1h \
     --export \
-    > ./clusters/minikube-cluster/sealed-secrets/sealed-secrets-source.yaml
+    > ./sealed-secrets/sealed-secrets-source.yaml
 ```
 
 3. Create Helm release manifest:
@@ -186,7 +183,7 @@ flux create helmrelease sealed-secrets \
     --chart-version=">=1.15.0-0" \
     --crds=CreateReplace \
     --export \
-    > ./clusters/minikube-cluster/sealed-secrets/sealed-secrets-release.yaml
+    > ./sealed-secrets/sealed-secrets-release.yaml
 ```
 
 4. Deploy via GitOps:
@@ -258,7 +255,7 @@ kubectl get SealedSecret -n hello -w
 
 > You can force the reconciliation with `flux reconcile source git flux-system`
 
-## 5. Test the hello-secret app!
+## 5. Test the hello-secret app
 
 1. Restart the `hello-app` pod:
 
