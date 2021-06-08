@@ -1,6 +1,6 @@
 # Secrets management with FluxV2
 
-This repository contains a quick demo on secrets management with Flux.
+This repository contains a quick demo on secrets management with Bitnami Sealed Secrets in a Flux workflow.
 
 ## Prerequisites
 
@@ -8,6 +8,7 @@ To follow this tutorial, you need:
 
 - FluxCLI `>= 0.14` ([installation guide][flux-installation])
 - Minikube `>= v1.20` ([installation guide](minikube-installation))
+- Kubeseal `=v0.16.0` ([installation guide](kubeseal-installation))
 - GitHub account
 
 ## 0. Create GitHub Token and setup environment variables
@@ -315,5 +316,6 @@ make delete
 [flux-sealed-secrets]: https://fluxcd.io/docs/guides/sealed-secrets/
 
 [minikube-installation]: https://minikube.sigs.k8s.io/docs/start/
+[kubeseal-installation]: https://github.com/bitnami-labs/sealed-secrets/releases/tag/v0.16.0
 
 [github-token-guide]: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
