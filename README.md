@@ -7,8 +7,8 @@ This repository contains a quick demo on secrets management with Bitnami Sealed 
 To follow this tutorial, you need:
 
 - FluxCLI `>= 0.14` ([installation guide][flux-installation])
-- Minikube `>= v1.20` ([installation guide](minikube-installation))
-- Kubeseal `=v0.16.0` ([installation guide](kubeseal-installation))
+- Minikube `>= v1.20` ([installation guide][minikube-installation])
+- Kubeseal `=v0.16.0` ([installation guide][kubeseal-installation])
 - GitHub account
 
 ## 0. Create GitHub Token and setup environment variables
