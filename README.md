@@ -248,7 +248,7 @@ git add hello-secret-sealed.yaml && git commit -m "Add sealed hello-secret"
 git push
 ```
 
-1. Wait for the `SealedSecret` to be deployed:
+5. Wait for the `SealedSecret` to be deployed:
 
 ```bash
 kubectl get SealedSecret -n hello -w
