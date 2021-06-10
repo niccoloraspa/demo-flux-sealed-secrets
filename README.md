@@ -1,4 +1,4 @@
-# Secrets management with FluxV2
+# Secrets management with FluxV2 using Bitnami Sealed Secrets
 
 This repository contains a quick demo on secrets management with Bitnami Sealed Secrets in a Flux workflow.
 
